@@ -1,0 +1,50 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+openshift_ca
+
+[OSEv3:vars]
+ansible_ssh_user=root
+ansible_become=yes
+debug_level=2
+deployment_type=origin
+openshift_release=v3.7
+openshift_pkg_version=-3.7.1-2.el7
+#openshift_repos_enable_testing=true
+containerized=false
+openshift_install_examples=true
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+osm_cluster_network_cidr=10.32.0.0/12
+openshift_portal_net=10.96.0.0/12
+openshift_use_dnsmasq=true
+openshift_clock_enabled=true
+openshift_hosted_manage_registry=false
+openshift_hosted_manage_router=false
+openshift_enable_service_catalog=false
+openshift_use_openshift_sdn=false
+os_sdn_network_plugin_name='cni'
+openshift_disable_check=disk_availability,package_version,docker_storage
+# Below are Contrail variables. Comment them out if you don't want to install Contrail through ansible-playbook
+
+openshift_use_contrail=true
+contrail_version=5.0
+contrail_container_tag=newton-master-33
+contrail_registry=docker.io/opencontrailnightly
+contrail_nodes=10.87.65.229
+vrouter_physical_interface=eth2 
+contrail_vip=10.87.65.229
+vrouter_gateway=10.87.65.254
+
+[masters]
+10.87.65.229 openshift_hostname=openshift-master
+
+[etcd]
+10.87.65.229 openshift_hostname=openshift-master
+
+[nodes]
+10.87.65.229 openshift_hostname=openshift-master
+10.87.65.237 openshift_hostname=openshift-slave
+
+[openshift_ca]
+10.87.65.229 openshift_hostname=openshift-master
