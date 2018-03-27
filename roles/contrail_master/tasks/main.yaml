@@ -1,4 +1,12 @@
 ---
+- set_fact:
+    api_vip: "{{ groups.lb.0 | ipaddr }}"
+  when: groups.lb is defined
+
+- set_fact:
+    api_vip: "{{ groups.masters.0 | ipaddr }}"
+  when: groups.lb is not defined
+  
 - when:
   - contrail_version | int < 5
 
@@ -76,14 +84,6 @@
 
 - name: Save iptable rules
   command: service iptables save
-
-- set_fact:
-    api_vip: "{{ groups.lb.0 | ipaddr }}"
-  when: groups.lb is defined
-
-- set_fact:
-    api_vip: "{{ groups.masters.0 | ipaddr }}"
-  when: groups.lb is not defined
 
 - name: Create Contrail single YAML file 
   template:
