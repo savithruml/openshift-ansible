@@ -81,6 +81,7 @@
     - { port: '7199', service: 'cassandra' }
     - { port: '7198', service: 'cassandra' }
     - { port: '8443', service: 'ifmap' }
+    - { port: '179', service: 'ifmap' }
 
 - name: Save iptable rules
   command: service iptables save
