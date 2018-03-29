@@ -60,6 +60,7 @@
     - { port: '8084', service: 'contrail-config-api-introspect' }
     - { port: '8143', service: 'contrail-web-ui' }
     - { port: '8080', service: 'contrail-web-ui-debug' }
+    - { port: '179', service: 'contrail-control-bgp' }
     - { port: '5269', service: 'contrail-control-xmpp' }
     - { port: '8093', service: 'contrail-control-dns-xmpp' }
     - { port: '8083', service: 'contrail-control-introspect' }
@@ -81,7 +82,6 @@
     - { port: '7199', service: 'cassandra' }
     - { port: '7198', service: 'cassandra' }
     - { port: '8443', service: 'ifmap' }
-    - { port: '179', service: 'ifmap' }
 
 - name: Save iptable rules
   command: service iptables save
