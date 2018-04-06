@@ -45,6 +45,7 @@
       - { port: '5269', service: 'contrail-control-xmpp' }
       - { port: '8093', service: 'contrail-control-dns-xmpp' }
       - { port: '8083', service: 'contrail-control-introspect' }
+      - { port: '8108', service: 'contrail-kubemanager-introspect' }
       - { port: '8092', service: 'contrail-control-introspect-dns' }
       - { port: '8086', service: 'contrail-analytics-collector' }
       - { port: '8081', service: 'contrail-analytics-api' }
