@@ -67,6 +67,8 @@
     - { port: '8092', service: 'contrail-control-introspect-dns' }
     - { port: '8086', service: 'contrail-analytics-collector' }
     - { port: '8081', service: 'contrail-analytics-api' }
+    - { port: '8087', service: 'contrail-schema-transformer-introspect' }
+    - { port: '8088', service: 'contrail-service-monitor-introspect' }
     - { port: '2181', service: 'zookeeper' }
     - { port: '2182', service: 'zookeeper' }
     - { port: '2888:3889', service: 'zookeeper' }
