@@ -96,6 +96,12 @@
   delegate_to: "{{ contrail_master }}"
   ignore_errors: True
 
+- name: Check Pods script to Master Node
+  command: /tmp/wait_for_pod.sh
+  register: command_result
+  failed_when: "'ERROR' in command_result.stdout"
+  delegate_to: "{{ contrail_master }}" 
+
 - name: Patch restricted scc
   command: >
     oc patch scc restricted --patch='{ "runAsUser": { "type": "RunAsAny" } }'
