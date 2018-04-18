@@ -4,7 +4,7 @@ analyticsdb_min_diskgb: 50
 configdb_min_diskgb: 25
 aaa_mode: no-auth
 auth_mode: noaut
-cloud_orchestrator: openshift
+cloud_orchestrator: kubernetes
 log_level: SYS_NOTICE
 metadata_proxy_secret: contrail
 rabbitmq_node_port: 5672
