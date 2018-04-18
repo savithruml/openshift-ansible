@@ -9,7 +9,7 @@ NAMESPACE=kube-system
 SUCCESS=0
 PODS_FOUND=0
 POD_RETRY_COUNT=0
-RETRY=10
+RETRY=50
 RETRY_DELAY=10
 while [ "$POD_RETRY_COUNT" -lt "$RETRY" ]; do
   POD_RETRY_COUNT=$((POD_RETRY_COUNT+1))
@@ -45,7 +45,7 @@ while [ "$POD_RETRY_COUNT" -lt "$RETRY" ]; do
 done
 
 if [ "$PODS_FOUND" -eq 0 ];then
-  echo "WARN: No pods launched by this chart's default settings"
+  echo "WARN: No containers launched by default setting"
   exit 0
 else
   echo "ERROR: Some containers failed to reach the ready state"
