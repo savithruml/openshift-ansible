@@ -11,12 +11,10 @@ metadata:
   namespace: kube-system
 data:
   AAA_MODE: {{ aaa_mode }}
-  ANALYTICS_API_VIP: {{ contrail_vip }}
   ANALYTICS_NODES: {{ contrail_nodes }}
   ANALYTICSDB_NODES: {{ contrail_nodes }}
   AUTH_MODE: {{ auth_mode }}
   CLOUD_ORCHESTRATOR: {{ CLOUD_ORCHESTRATOR }}
-  CONFIG_API_VIP: {{ contrail_vip }}
   CONFIG_NODES: {{ contrail_nodes }}
   CONFIGDB_NODES: {{ contrail_nodes }}
   CONTROL_NODES: {{ contrail_nodes }}
@@ -30,7 +28,6 @@ data:
   REDIS_NODES: {{ contrail_nodes }}
   VROUTER_GATEWAY: {{ vrouter_gateway }}
   WEBUI_NODES: {{ contrail_nodes }}
-  WEBUI_VIP: {{ contrail_vip }}
   ZOOKEEPER_NODES: {{ contrail_nodes }}
 ---
 apiVersion: v1

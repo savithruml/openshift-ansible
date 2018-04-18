@@ -100,6 +100,7 @@
   command: /tmp/wait_for_pod.sh
   register: command_result
   failed_when: "'ERROR' in command_result.stdout"
+  run_once: True
   delegate_to: "{{ contrail_master }}" 
 
 - name: Patch restricted scc
