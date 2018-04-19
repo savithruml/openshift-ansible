@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash 
 ###
 ### Borrowed from https://github.com/kubernetes/charts/blob/master/test/verify-release.sh
 ### 
@@ -9,8 +9,8 @@ NAMESPACE=kube-system
 SUCCESS=0
 PODS_FOUND=0
 POD_RETRY_COUNT=0
-RETRY=50
-RETRY_DELAY=10
+RETRY=100
+RETRY_DELAY=5
 while [ "$POD_RETRY_COUNT" -lt "$RETRY" ]; do
   POD_RETRY_COUNT=$((POD_RETRY_COUNT+1))
   POD_STATUS=`oc get pods --no-headers --namespace $NAMESPACE`
@@ -45,10 +45,11 @@ while [ "$POD_RETRY_COUNT" -lt "$RETRY" ]; do
 done
 
 if [ "$PODS_FOUND" -eq 0 ];then
-  echo "WARN: No containers launched by default setting"
+  echo "WARN: No pods launched by this chart's default settings"
   exit 0
 else
+  POD_FAILED=`oc get pods --no-headers --namespace kube-system | grep -v Running | cut -d " " -f1`
   echo "ERROR: Some containers failed to reach the ready state"
-  echo ERROR
+  echo ERROR  POD $POD_FAILED is not ready
   exit 1
 fi
