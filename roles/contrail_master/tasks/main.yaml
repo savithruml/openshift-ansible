@@ -79,7 +79,7 @@
 
   - name: Create Contrail single YAML file for Contrail 4.0 
     template:
-      src: contrail-installer.j2
+      src: contrail-installer-4.j2
       dest: /tmp/contrail-installer.yaml
       owner: root
       mode: 0644
