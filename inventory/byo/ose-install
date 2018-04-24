@@ -38,7 +38,7 @@ openshift_use_contrail=true
 contrail_version=5.0
 analyticsdb_min_diskgb=50
 configdb_min_diskgb=25
-contrail_container_tag=newton-master-39
+contrail_container_tag=latest
 vrouter_physical_interface=eno1
 vrouter_gateway=10.87.64.254
 
