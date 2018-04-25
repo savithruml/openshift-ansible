@@ -72,6 +72,7 @@
     - { port: '2181', service: 'zookeeper' }
     - { port: '2182', service: 'zookeeper' }
     - { port: '2888:3889', service: 'zookeeper' }
+    - { port: '4888:5888', service: 'zookeeper-analytics' }
     - { port: '5672', service: 'rabbitmq' }
     - { port: '6381', service: 'redis' }
     - { port: '9092', service: 'kafka' }
