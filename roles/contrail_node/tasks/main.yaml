@@ -86,7 +86,8 @@
 
 - name: Create Contrail registry secret
   command: oc create secret docker-registry contrail-registry-secret --docker-server="{{ contrail_registry }}" --docker-username="{{ contrail_registry_username }}" --docker-password="{{ contrail_registry_password }}" --docker-email=contrail@helloworld.com -n kube-system
-  delegate_to: "{{ groups['masters'][0] }}"
+  run_once: True
+  delegate_to: "{{ contrail_master }}"
 
 - name: Make master schedulable
   command: oadm manage-node {{ hostvars[item]['openshift_hostname'] }} --schedulable
