@@ -200,6 +200,8 @@ spec:
       - name: zookeeper-logs
         hostPath:
           path: /var/log/contrail/zookeeper
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -237,6 +239,8 @@ spec:
             name: env
         - configMapRef:
             name: contrail-analytics-zookeeper
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -284,6 +288,8 @@ spec:
       - name: analyticsdb-log
         hostPath:
           path: /var/log/contrail/analyticsdb
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -331,6 +337,8 @@ spec:
       - name: configdb-log
         hostPath:
           path: /var/log/contrail/configdb
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -383,6 +391,8 @@ spec:
       - name: analytics-zookeeper-datalog
         hostPath:
           path: /var/lib/analytics_zookeeper_datalog
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -520,6 +530,8 @@ spec:
       - name: docker-unix-socket
         hostPath:
           path: /var/run
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -624,6 +636,8 @@ spec:
           path: /var/run
       - name: dns-config
         emptyDir: {}
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -735,6 +749,8 @@ spec:
       - name: docker-unix-socket
         hostPath:
           path: /var/run
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -792,6 +808,8 @@ spec:
       - name: webui-logs
         hostPath:
           path: /var/log/contrail/webui
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -842,6 +860,8 @@ spec:
       - name: redis-logs
         hostPath:
           path: /var/log/contrail/redis
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -893,6 +913,8 @@ spec:
       - name: rabbitmq-logs
         hostPath:
           path: /var/log/contrail/rabbitmq
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -945,6 +967,8 @@ spec:
       - name: pod-secret
         secret:
           secretName: contrail-kube-manager-token
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -1087,4 +1111,5 @@ spec:
       - name: agent-logs
         hostPath:
           path: /var/log/contrail/agent
-
+      imagePullSecrets:
+      - name: contrail-registry-secret

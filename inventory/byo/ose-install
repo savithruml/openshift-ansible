@@ -25,12 +25,14 @@ openshift_enable_service_catalog=false
 openshift_use_openshift_sdn=false
 os_sdn_network_plugin_name='cni'
 openshift_disable_check=disk_availability,package_version,docker_storage
-# Below are Contrail variables. Comment them out if you don't want to install Contrail through ansible-playbook
 
 openshift_use_contrail=true
 contrail_version=5.0
 contrail_container_tag=newton-master-33
 contrail_registry=docker.io/opencontrailnightly
+# Username /Password for private Docker regiteries 
+#contrail_registry_username=test
+#contrail_registry_password=test
 contrail_nodes=10.87.65.229
 vrouter_physical_interface=eth2 
 contrail_vip=10.87.65.229
