@@ -201,7 +201,11 @@ spec:
         hostPath:
           path: /var/log/contrail/zookeeper
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -240,7 +244,11 @@ spec:
         - configMapRef:
             name: contrail-analytics-zookeeper
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -289,7 +297,11 @@ spec:
         hostPath:
           path: /var/log/contrail/analyticsdb
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -338,7 +350,11 @@ spec:
         hostPath:
           path: /var/log/contrail/configdb
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -392,7 +408,11 @@ spec:
         hostPath:
           path: /var/lib/analytics_zookeeper_datalog
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -531,7 +551,11 @@ spec:
         hostPath:
           path: /var/run
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -637,7 +661,11 @@ spec:
       - name: dns-config
         emptyDir: {}
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -750,7 +778,11 @@ spec:
         hostPath:
           path: /var/run
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -809,7 +841,11 @@ spec:
         hostPath:
           path: /var/log/contrail/webui
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -861,7 +897,11 @@ spec:
         hostPath:
           path: /var/log/contrail/redis
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -914,7 +954,11 @@ spec:
         hostPath:
           path: /var/log/contrail/rabbitmq
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -968,7 +1012,11 @@ spec:
         secret:
           secretName: contrail-kube-manager-token
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
@@ -1112,4 +1160,8 @@ spec:
         hostPath:
           path: /var/log/contrail/agent
       imagePullSecrets:
+{% if contrail_registry_username is defined and contrail_registry_password %}
       - name: contrail-registry-secret
+{% else %}        
+      - name: 
+{% endif %}
