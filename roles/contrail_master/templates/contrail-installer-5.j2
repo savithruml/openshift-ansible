@@ -284,19 +284,19 @@ spec:
           name: logs
         - mountPath: /var/run/docker.sock
           name: docker
-       - name: contrail-analyticsdb
-         image: "{{ contrail_registry }}/contrail-external-cassandra:{{ contrail_container_tag }}"
-         imagePullPolicy: ""
-         securityContext:
-           privileged: true
-         envFrom:
-         - configMapRef:
-             name: contrail-analyticsdb-config
-         volumeMounts:
-         - mountPath: /var/lib/cassandra
-           name: analyticsdb-data
-         - mountPath: /var/log/cassandra
-           name: analyticsdb-log
+      - name: contrail-analyticsdb
+        image: "{{ contrail_registry }}/contrail-external-cassandra:{{ contrail_container_tag }}"
+        imagePullPolicy: ""
+        securityContext:
+          privileged: true
+        envFrom:
+        - configMapRef:
+            name: contrail-analyticsdb-config
+        volumeMounts:
+        - mountPath: /var/lib/cassandra
+          name: analyticsdb-data
+        - mountPath: /var/log/cassandra
+          name: analyticsdb-log
       volumes:
       - name: analyticsdb-data
         hostPath:
@@ -314,6 +314,8 @@ spec:
       - name: docker
         hostPath:
           path: /var/run/docker.sock
+      imagePullSecrets:
+      - name: contrail-registry-secret
 ---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
