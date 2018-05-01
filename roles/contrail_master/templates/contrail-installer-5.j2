@@ -1,14 +1,9 @@
 ---
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: contrail
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: env
-  namespace: contrail
+  namespace: kube-system
 data:
   AAA_MODE: "{{ aaa_mode }}"
   ANALYTICS_API_VIP: "{{ groups.masters | ipaddr | join(',') }}"
@@ -37,7 +32,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nodemgr-config
-  namespace: contrail
+  namespace: kube-system
 data:
   DOCKER_HOST: "unix://mnt/docker.sock"
 ---
@@ -45,7 +40,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: contrail-analyticsdb-config
-  namespace: contrail
+  namespace: kube-system
 data:
   CASSANDRA_SEEDS: "{{ groups.masters | ipaddr | join(',') }}"
   CASSANDRA_CLUSTER_NAME: Contrail
@@ -61,7 +56,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: contrail-configdb-config
-  namespace: contrail
+  namespace: kube-system
 data:
   CASSANDRA_SEEDS: "{{ groups.masters | ipaddr | join(',') }}"
   CASSANDRA_CLUSTER_NAME: ContrailConfigDB
@@ -77,7 +72,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rabbitmq-config
-  namespace: contrail
+  namespace: kube-system
 data:
   RABBITMQ_NODES: "{{ groups.masters | ipaddr | join(',') }}"
   RABBITMQ_NODE_PORT: "{{ rabbitmq_node_port }}"
@@ -87,7 +82,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: contrail-config-zookeeper
-  namespace: contrail
+  namespace: kube-system
 data:
   ZOOKEEPER_PORT: "{{ zookeeper_port }}"
   ZOOKEEPER_PORTS: "{{ zookeeper_ports }}"
@@ -97,7 +92,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: contrail-analytics-zookeeper
-  namespace: contrail
+  namespace: kube-system
 data:
   ZOOKEEPER_PORT: "{{ zookeeper_analytics_port }}"
   ZOOKEEPER_PORTS: "{{ zookeeper_analytics_ports }}"
@@ -107,7 +102,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kube-manager-config
-  namespace: contrail
+  namespace: kube-system
 data:
   KUBERNETES_API_SERVER: "{{ api_vip | ipaddr }}"
   KUBERNETES_API_SECURE_PORT: "{{ kubernetes_api_secure_port }}"
@@ -119,13 +114,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: contrail
-  namespace: contrail
+  namespace: kube-system
 ---
 kind: ClusterRole
 apiVersion: v1
 metadata:
   name: contrail
-  namespace: contrail
+  namespace: kube-system
 rules:
   - apiGroups: ["*"]
     resources: ["*"]
@@ -142,7 +137,7 @@ subjects:
   name: kube-system:contrail
 - kind: ServiceAccount
   name: contrail
-  namespace: contrail
+  namespace: kube-system
 userNames:
   - system:serviceaccount:kube-system:contrail
 ---
@@ -150,7 +145,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: contrail-kube-manager-token
-  namespace: contrail
+  namespace: kube-system
   annotations:
     kubernetes.io/service-account.name: contrail
 type: kubernetes.io/service-account-token
@@ -159,7 +154,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: config-zookeeper
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: config-zookeeper
 spec:
@@ -208,7 +203,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: kafka
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: kafka
 spec:
@@ -247,7 +242,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-analyticsdb
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-analyticsdb
 spec:
@@ -330,7 +325,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-configdb
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-configdb
 spec:
@@ -379,7 +374,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-analytics-zookeeper
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: zookeeper
 spec:
@@ -433,7 +428,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-analytics
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-analytics
 spec:
@@ -567,7 +562,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-controller-control
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-controller-control
 spec:
@@ -668,7 +663,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-controller-config
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-controller-config
 spec:
@@ -776,7 +771,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-controller-webui
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-controller-webui
 spec:
@@ -835,7 +830,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: redis
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: redis
 spec:
@@ -887,7 +882,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: rabbitmq
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: rabbitmq
 spec:
@@ -940,7 +935,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-kube-manager
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-kube-manager
 spec:
@@ -994,7 +989,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: contrail-agent
-  namespace: contrail
+  namespace: kube-system
   labels:
     app: contrail-agent
 spec:
@@ -1117,4 +1112,4 @@ spec:
         hostPath:
           path: /var/log/contrail/agent
       imagePullSecrets:
-      - name: contrail-registry-secret  
+      - name: contrail-registry-secret
