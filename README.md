@@ -1,96 +1,114 @@
-[![Join the chat at https://gitter.im/openshift/openshift-ansible](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openshift/openshift-ansible)
-[![Build Status](https://travis-ci.org/openshift/openshift-ansible.svg?branch=master)](https://travis-ci.org/openshift/openshift-ansible)
-[![Coverage Status](https://coveralls.io/repos/github/openshift/openshift-ansible/badge.svg?branch=master)](https://coveralls.io/github/openshift/openshift-ansible?branch=master)
+# Red Hat OpenShift Origin with Contrail SDN
 
-# OpenShift Ansible
+This tutorial walks you through the installation of Red Hat OpenShift container orchestration platform with Contrail SDN as the CNI on Amazon Web Services (AWS). 
 
-This repository contains [Ansible](https://www.ansible.com/) roles and
-playbooks to install, upgrade, and manage
-[OpenShift](https://www.openshift.com/) clusters.
+It leverages AWS's CloudFormation to launch the stack & takes approximately 30 min for the total installation to complete. The stack builds
 
-**Note**: the Ansible playbooks in this repository require an RPM
-package that provides `docker`. Currently, the RPMs from
-[dockerproject.org](https://dockerproject.org/) do not provide this
-requirement, though they may in the future. This limitation is being
-tracked by
-[#2720](https://github.com/openshift/openshift-ansible/issues/2720).
+* Red Hat OpenShift Origin v3.7
+* Contrail Networking CNI 5.0
 
-## Getting the correct version
-When choosing an openshift release, ensure that the necessary origin packages
-are available in your distribution's repository.  By default, openshift-ansible
-will not configure extra repositories for testing or staging packages for
-end users.
+# Prerequisites
 
-We recommend using a release branch. We maintain stable branches
-corresponding to upstream Origin releases, e.g.: we guarantee an
-openshift-ansible 3.2 release will fully support an origin
-[1.2 release](https://github.com/openshift/openshift-ansible/tree/release-1.2).
+* [Create](https://portal.aws.amazon.com/billing/signup#/start) an AWS account if you don't have one. Else [Login](https://aws.amazon.com/console/)
 
-The most recent branch will often receive minor feature backports and
-fixes. Older branches will receive only critical fixes.
+* [Subscribe](https://aws.amazon.com/marketplace/pp/B00O7WM7QW) to CentOS AMI on AWS marketplace
 
-In addition to the release branches, the master branch
-[master branch](https://github.com/openshift/openshift-ansible/tree/master)
-tracks our current work **in development** and should be compatible
-with the
-[Origin master branch](https://github.com/openshift/origin/tree/master)
-(code in development).
+* [Create](https://github.com/join) a GitHub account if you don't have one. Else [Login](https://github.com/login)
 
+# Installation
 
+* Click on the button below to launch the stack in AWS
 
-**Getting the right openshift-ansible release**
+     <a href="https://us-west-1.console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/create/review?filter=active&templateURL=https:%2F%2Fs3-us-west-1.amazonaws.com%2Fcontrail-dev-ops%2Fopenshift-contrail-stack-5.yaml&stackName=openshift-stack" target="_blank"><img alt="Launch Stack" src="https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg"></a>
 
-Follow this release pattern and you can't go wrong:
+* Once you click on the button, you will be navigated to AWS CloudFormation page. Enter the parameters
 
-| Origin/OCP    | OpenShift-Ansible version | openshift-ansible branch |
-| ------------- | ----------------- |----------------------------------|
-| 1.3 / 3.3          | 3.3               | release-1.3 |
-| 1.4 / 3.4          | 3.4               | release-1.4 |
-| 1.5 / 3.5          | 3.5               | release-1.5 |
-| 3.*X*         | 3.*X*             | release-3.x |
+  ![launch-stack](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/1-initiate.jpg)
 
-If you're running from the openshift-ansible **master branch** we can
-only guarantee compatibility with the newest origin releases **in
-development**. Use a branch corresponding to your origin version if
-you are not running a stable release.
+    **NOTE:** You can leave most of the parameters set to default
 
+       InstanceType:
+         Description: EC2 instance type
+         Default: t2.xlarge
 
-## Setup
+       VpcCIDR:
+         Description: CIDR block for the VPC
+         Default: 10.10.0.0/16
 
-Install base dependencies:
+       SubnetCIDR:
+         Description: CIDR block for the VPC subnet
+         Default: 10.10.10.0/24
+    
+       MasterIPv4Address:
+         Description: Master instance's IPv4 Address
+         Default: 10.10.10.10
 
-Requirements:
+       MinionIPv4Address:
+         Description: Minion instance's IPv4 Address
+         Default: 10.10.10.11
+   
+       SSHLocation:
+         Description: Allow access to EC2 instances from
+         Default: 0.0.0.0/0
 
-- Ansible >= 2.4.1.0
-- Jinja >= 2.7
-- pyOpenSSL
-- python-lxml
+       InstancePassword:
+         Description: Password for the instances
 
-----
+       ContrailBuild:
+         Description: Contrail build information
+         Default: 5.0
 
-Fedora:
+       ContrailRegistry:
+         Description: Registry to pull Contrail containers
+         Default: hub.juniper.net/contrail
+    
+       ContrailRegistryUsername:
+         Description: Registry username
+    
+       ContrailRegistryPassword:
+         Description: Registry password
 
-```
-dnf install -y ansible pyOpenSSL python-cryptography python-lxml
-```
+* Wait for the stack to complete. You can monitor the resource creation by clicking on the **Events** tab
+  
+  ![monitor-stack](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/2-monitor.jpg)
 
-## OpenShift Installation Documentation:
+* Once complete, navigate to the **Outputs** tab & copy the ShellURL value. Login to the instance using the ShellURL & the password you set
 
-- [OpenShift Enterprise](https://docs.openshift.com/enterprise/latest/install_config/install/advanced_install.html)
-- [OpenShift Origin](https://docs.openshift.org/latest/install_config/install/advanced_install.html)
+  ![complete-stack](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/3-complete.jpg)
 
-## Containerized OpenShift Ansible
+* Run the script from the master instance's /root directory
 
-See [README_CONTAINER_IMAGE.md](README_CONTAINER_IMAGE.md) for information on how to package openshift-ansible as a container image.
+       (local-instance)# ssh root@ec2-<public-ip>.us-west-1.compute.amazonaws.com
 
-## Installer Hooks
+       (master-instance)# cd /root
+       (master-instance)# ~/run.sh
 
-See the [hooks documentation](HOOKS.md).
+  ![run-stack](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/4-run-sh.jpg)
 
-## Contributing
+* Once install is complete, login to the dashboards (WebUI) of both OpenShift & Contrail. The URL's are listed in the **Outputs** tab of AWS CloudFormation
 
-See the [contribution guide](CONTRIBUTING.md).
+  ![openshift-webui](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/6-openshift-webui.png)
 
-## Building openshift-ansible RPMs and container images
+  ![contrail-webui](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/7-contrail-webui.png)
 
-See the [build instructions](BUILD.md).
+* Verify all Contrail pods are running healthy, by logging into OpenShift & Contrail dashboards
+
+    **_OpenShift Dashboard > My Projects > kube-system > Applications > Pods_**
+
+  ![contrail-pods](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/8-contrail-pods.png)
+
+    **_Contrail Dashboard > Monitor > Infrastructure > Dashboard_**
+
+  ![contrail-status](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/9-contrail-status.png)
+
+* Enable SNAT on the pod network, by logging into Contrail dashboard
+
+    **_Contrail Dashboard > Configure > Networking > Networks > default-domain > default> k8s-default-pod-network (edit)_**
+
+  ![enable-snat](https://github.com/savithruml/cloud-ops/blob/master/aws/cloudformation/openshift/images/10-enable-snat.jpg)
+
+* Try the below labs
+
+    1. [LAB-1: Build/test/deploy highly scalable apps using OpenShift & Contrail SDN](https://s3-us-west-1.amazonaws.com/contrail-labs/usecase-1-openshift-build.pdf)
+    2. [LAB-2: Expose highly scalable apps using OpenShift & Contrail SDN](https://s3-us-west-1.amazonaws.com/contrail-labs/usecase-2-openshift-ingress.pdf)
+    3. [LAB-3: Secure highly scalable apps using OpenShift & Contrail SDN](https://s3-us-west-1.amazonaws.com/contrail-labs/usecase-3-openshift-network-policy.pdf)
