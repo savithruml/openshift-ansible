@@ -50,7 +50,19 @@ Refer to this example [inventory](https://github.com/savithruml/openshift-contra
 
 #### Set this parameter to the downloaded Contrail SDN image version
 
-        contrail_version=4.1.0.0-8
+        contrail_version=4.1.0.0-8 or 5.0.0-0.40
+        
+#### Set this parameter to download Contrail SDN release 5.X images from Juniper registry
+        
+        contrail_registry=hub.juniper.net/contrail
+        
+#### Set this parameter to the username provided by Juniper support
+
+        contrail_registry_username=<username-for-contrail-container-registry>
+        
+#### Set this parameter to the password provided by Juniper support
+
+        contrail_registry_password=<password-for-contrail-container-registry>
 
 #### Set Contrail Analytics Database size
 
@@ -71,6 +83,8 @@ Refer to this example [inventory](https://github.com/savithruml/openshift-contra
 #### Set CNI version
 
         cni_version=v0.5.2
+        
+
 
 
 ### CONTACT
