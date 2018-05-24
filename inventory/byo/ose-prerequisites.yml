@@ -16,6 +16,8 @@
     - sos
     - psacct
     - ntp
+    - docker
+    - NetworkManager
 
   - name: Install Openshift Enterprise package
     yum: name="{{ item }}" state=present
@@ -29,11 +31,14 @@
     when:
     - deployment_type == "openshift-enterprise"
 
-  - name: Install Docker
-    yum: name=docker-engine-1.12.6 state=present
+  - name: Enable & start docker service
+    service:
+      name: docker
+      state: started
+      enabled: yes
 
-  - name: Enable Docker Service
-    service: name=docker enabled=yes
-
-  - name: Start Docker Service
-    service: name=docker state=started
+  - name: Enble & start network-manager service
+    service:
+      name: NetworkManager
+      state: started
+      enabled: yes
